@@ -1,0 +1,143 @@
+﻿using Refit;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using WebApplication1.News;
+using WpfApp2.Comments;
+
+namespace WpfApp2.News
+{
+    /// <summary>
+    /// Логика взаимодействия для NewsPage.xaml
+    /// </summary>
+    public partial class NewsPage : Page
+    {
+        private INewsService service;
+        readonly ObservableCollection<NewsDTO> items = new();
+        public NewsPage()
+        {
+            InitializeComponent();
+            service = RestService.For<INewsService>("http://localhost:5221");
+            newsList.ItemsSource = items;
+            FetchNews();
+
+        }
+
+        void FetchNews()
+        {
+            errorBlock.Visibility = Visibility.Collapsed;
+            loadingIndicator.IsActive = true;
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var response = await service.Index();
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        items.Clear();
+                        response.ForEach(item => items.Add(item));
+                        loadingIndicator.IsActive = false;
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        loadingIndicator.IsActive = false;
+                        errorBlock.Visibility = Visibility.Visible;
+                        errorText.Text = ex.Message;
+                    });
+                }
+            });
+        }
+
+        void DeleteNews(int id)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    await service.Delete(id);
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        items.Remove(items.First(n => n.Id == id));
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        MessageBox.Show(ex.Message);
+                    });
+                }
+            });
+        }
+
+        private void NewsChanged(object sender, EventArgs e)
+        {
+            var item = (NewsDTO)sender;
+            var existing = items.FirstOrDefault(n => n.Id == item.Id);
+            if (existing == null)
+            {
+                items.Insert(0, item);
+
+            }
+            else
+            {
+                var index = items.IndexOf(existing);
+                items.RemoveAt(index);
+                items.Insert(index, item);
+            }
+        }
+
+        private void CreateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new NewsEditPage(NewsChanged));
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int newsId = GetContext<NewsDTO>(sender).Id;
+            NavigationService?.Navigate(new NewsEditPage(NewsChanged, newsId));
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var action = MessageBox.Show("Удалить новость? Это действие нельзя отменить!", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (action == MessageBoxResult.Yes)
+            {
+                DeleteNews(GetContext<NewsDTO>(sender).Id);
+            }
+        }
+
+        private void CommentsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            int newsId = GetContext<NewsDTO>(sender).Id;
+            NavigationService?.Navigate(new CommentsPage(newsId));
+        }
+
+        private void RetryBtn_Click(object sender, RoutedEventArgs e)
+        {
+            FetchNews();
+        }
+
+        private T GetContext<T>(object sender)
+        {
+            var view = sender as FrameworkElement;
+            return (T)view.DataContext;
+        }
+    }
+
+}
