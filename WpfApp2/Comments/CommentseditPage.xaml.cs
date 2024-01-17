@@ -13,29 +13,31 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WebApplication1.Comments;
 using WebApplication1.News;
+using WpfApp2.News;
 
-namespace WpfApp2.News
+namespace WpfApp2.Comments
 {
     /// <summary>
-    /// Логика взаимодействия для NewsEditPage.xaml
+    /// Логика взаимодействия для CommentseditPage.xaml
     /// </summary>
-    public partial class NewsEditPage : Page
+    public partial class CommentseditPage : Page
     {
-        private readonly INewsService service;
+        private readonly ICommentsService service;
         private int? _newsId;
-        private EventHandler OnNewsChanged;
-        public NewsEditPage(EventHandler onNewsChanged, int? newsId = null)
+        private EventHandler OnCommentsChanged;
+        public CommentseditPage(EventHandler onNewsChanged, int? newsId = null)
         {
             InitializeComponent();
-            service = RestService.For<INewsService>("http://localhost:5221");
+            service = RestService.For<ICommentsService>("http://localhost:5221");
             _newsId = newsId;
-            OnNewsChanged += onNewsChanged;
+            OnCommentsChanged += onNewsChanged;
             if (_newsId != null)
             {
                 Task.Run(async () =>
                 {
-                    
+
                     try
                     {
                         var item = await service.Details((int)_newsId);
@@ -55,20 +57,20 @@ namespace WpfApp2.News
 
         private void Save()
         {
-            NewsCreateDTO item = new()
+            CommentCreateDTO item = new()
             {
-                Title = titleText.Text,
+                NewsId = (int)_newsId,
                 Content = contentText.Text
             };
             Task.Run(async () =>
             {
                 try
                 {
-                    NewsDTO createditem = _newsId == null ? await service.Create(item) : await service.Edit((int)_newsId, item);
+                    CommentsDTO createditem = _newsId == null ? await service.Create(item) : await service.Edit((int)_newsId, item);
 
                     await Dispatcher.BeginInvoke(() =>
                     {
-                        OnNewsChanged?.Invoke(createditem, EventArgs.Empty);
+                        OnCommentsChanged?.Invoke(createditem, EventArgs.Empty);
                         NavigationService?.GoBack();
                     });
                 }
@@ -79,12 +81,12 @@ namespace WpfApp2.News
             });
         }
 
-        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        private void BackBtn2_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.GoBack();
         }
 
-        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        private void SaveBtn2_Click(object sender, RoutedEventArgs e)
         {
             var action = MessageBox.Show("Все правильно написали? Грамматических ашыбок нет?", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
@@ -94,5 +96,4 @@ namespace WpfApp2.News
             }
         }
     }
-
 }

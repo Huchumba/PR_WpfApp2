@@ -39,8 +39,8 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Title}" FontSize="18" TextWrapping="WrapWithOverflow"/>
-                                            <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy}" Foreground="DarkCyan"/>
+                                            <TextBlock Text="{Binding Title}" FontSize="18" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
                                         </StackPanel>
                                         <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">Редактировать</Button>
                                         <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">Удалить</Button>
@@ -55,7 +55,7 @@
                 </ItemsControl>
             </ScrollViewer>
             <StackPanel Name="errorBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
-                <TextBlock FontSize="16" HorizontalAlignment="Center">Ошибка</TextBlock>
+                <TextBlock Name="t1" FontSize="16" HorizontalAlignment="Center">Ошибка</TextBlock>
                 <TextBlock HorizontalAlignment="Center" Name="errorText">Что-то пошло не так...</TextBlock>
                 <Button 
                     Margin="5" 

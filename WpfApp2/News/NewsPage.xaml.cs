@@ -32,7 +32,6 @@ namespace WpfApp2.News
             service = RestService.For<INewsService>("http://localhost:5221");
             newsList.ItemsSource = items;
             FetchNews();
-
         }
 
         void FetchNews()
@@ -46,18 +45,28 @@ namespace WpfApp2.News
                     var response = await service.Index();
                     await Dispatcher.BeginInvoke(() =>
                     {
+                        if ( response.Capacity == 0)
+                        {
+                            errorBlock.Visibility = Visibility.Visible;
+                            errorText.Text = "Нет данных";
+                        }
                         items.Clear();
                         response.ForEach(item => items.Add(item));
-                        loadingIndicator.IsActive = false;
                     });
                 }
                 catch (Exception ex)
                 {
                     await Dispatcher.BeginInvoke(() =>
                     {
-                        loadingIndicator.IsActive = false;
                         errorBlock.Visibility = Visibility.Visible;
                         errorText.Text = ex.Message;
+                    });
+                }
+                finally
+                {
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        loadingIndicator.IsActive = false;
                     });
                 }
             });

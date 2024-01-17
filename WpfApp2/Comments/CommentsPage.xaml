@@ -3,26 +3,73 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:li="http://github.com/zeluisping/loadingIndicators/xaml/controls"
       xmlns:local="clr-namespace:WpfApp2.Comments"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CommentsPage">
 
     <DockPanel LastChildFill="True">
+        <Grid DockPanel.Dock="Top" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock FontSize="21" Margin="5">Новости</TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="CreateBtn" Click="CreateBtn_Click">Создать</Button>
+            </StackPanel>
+        </Grid>
+        <Grid>
+            <ScrollViewer>
+                <ItemsControl Name="commentsList">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="5" Background="WhiteSmoke" Margin="5,5,5,0">
+                                <StackPanel Orientation="Vertical" Margin="5" >
+                                    <Grid >
+                                        <Grid.ColumnDefinitions >
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Author}" FontSize="18" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
+                                        </StackPanel>
+                                        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">Редактировать</Button>
+                                        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">Удалить</Button>
+                                    </Grid>
 
-        <Button 
-            DockPanel.Dock="Top" 
-            Margin="5" 
-            Padding="5" 
-            FontSize="14" 
-            BorderThickness="0" 
-            Name="BackBtn" 
-            Click="BackBtn_Click"
-            HorizontalAlignment="Left">
-            Назад
-        </Button>
-
-        <TextBlock Name ="textBlock"/>
+                                    <TextBlock Text="{Binding Content}" FontSize="14" TextWrapping="Wrap"/>
+                                    <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Name="CommentsBtn" Click="CommentsBtn_Click">Комментарии</Button>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
+            <StackPanel Name="errorBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+                <TextBlock Name="t1" FontSize="16" HorizontalAlignment="Center">Ошибка</TextBlock>
+                <TextBlock HorizontalAlignment="Center" Name="errorText">Что-то пошло не так...</TextBlock>
+                <Button 
+                    Margin="5" 
+                    Padding="5" 
+                    FontSize="14" 
+                    BorderThickness="0" 
+                    Background="White" 
+                    Name="RetryBtn" 
+                    Click="RetryBtn_Click"
+                    HorizontalAlignment="Center" >
+                    Повторить
+                </Button>
+            </StackPanel>
+            <li:LoadingIndicator Name="loadingIndicator" IsActive="True"  Foreground="DarkCyan" Mode="Arcs" />
+        </Grid>
     </DockPanel>
-
 </Page>
