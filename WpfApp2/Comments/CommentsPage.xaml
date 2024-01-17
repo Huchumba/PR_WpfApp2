@@ -42,8 +42,7 @@
                                             <TextBlock Text="{Binding Author}" FontSize="18" TextWrapping="WrapWithOverflow" />
                                             <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
                                         </StackPanel>
-                                        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">Редактировать</Button>
-                                        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">Удалить</Button>
+                                        
                                     </Grid>
 
                                     <TextBlock Text="{Binding Content}" FontSize="14" TextWrapping="Wrap"/>
