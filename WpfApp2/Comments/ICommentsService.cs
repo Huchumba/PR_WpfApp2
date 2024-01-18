@@ -12,7 +12,7 @@ namespace WpfApp2.Comments
     internal interface ICommentsService
     {
         [Get("/comments")]
-        Task<List<CommentsDTO>> Index();
+        Task<List<CommentsDTO>> Index([Query] int newsId);
 
         [Get("/comments/{id}")]
         Task<CommentsDTO> Details(int id);

@@ -24,5 +24,8 @@ namespace WebApplication1.Comments
 
         [Required]
         public int NewsId { get; set; }
+
+        [Required]
+        public int AuthorId { get; set; }
     }
 }

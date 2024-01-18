@@ -29,31 +29,120 @@ namespace WpfApp2.Comments
         readonly ObservableCollection<CommentsDTO> items = new();
 
         private int _newsId;
+        private int? commentId = null;
+
         public CommentsPage(int newsId)
         {
             InitializeComponent();
             service = RestService.For<ICommentsService>("http://localhost:5221");
             commentsList.ItemsSource = items;
             _newsId = newsId;
+            FetchComments();
+
+           /* if (_newsId != null)
+            {
+                Task.Run(async () =>
+                {
+
+                    try
+                    {
+                        var content = await service.Index(_newsId);
+                        await Dispatcher.BeginInvoke(() =>
+                        {
+                            items.Clear();
+                            content.ForEach(x => items.Add(x));
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                });
+            }*/
         }
         private void CommentsChanged(object sender, EventArgs e)
         {
             var item = (CommentsDTO)sender;
-            var existing = items.FirstOrDefault(n => n.Id == item.Id);
-            if (existing == null)
-            {
-                items.Insert(0, item);
-
-            }
-            else
-            {
-                var index = items.IndexOf(existing);
-                items.RemoveAt(index);
-                items.Insert(index, item);
-            }
+           
         }
 
-        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        void FetchComments()
+        {
+            errorBlock.Visibility = Visibility.Collapsed;
+            loadingIndicator.IsActive = true;
+            Task.Run(async () =>
+            {
+                try
+                {
+                    var response = await service.Index(_newsId);
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        if (response.Capacity == 0)
+                        {
+                            errorBlock.Visibility = Visibility.Visible;
+                            errorText.Text = "Нет данных";
+                        }
+                        items.Clear();
+                        response.ForEach(item => items.Add(item));
+                    });
+                }
+                catch (Exception ex)
+                {
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        errorBlock.Visibility = Visibility.Visible;
+                        errorText.Text = ex.Message;
+                    });
+                }
+                finally
+                {
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        loadingIndicator.IsActive = false;
+                    });
+                }
+            });
+        }
+
+        private void Save()
+        {
+            CommentCreateDTO item = new()
+            {
+                NewsId = _newsId,
+                Content = CommentText.Text,
+                AuthorId = 0,
+            };
+            Task.Run(async () =>
+            {
+                try
+                {
+                    CommentsDTO createditem = commentId == null ? await service.Create(item) : await service.Edit((int)commentId, item);
+
+                    await Dispatcher.BeginInvoke(() =>
+                    {
+                        var existing = items.FirstOrDefault(n => n.Id == createditem.Id);
+                        if (existing == null)
+                        {
+                            items.Insert(0, createditem);
+                        }
+                        else
+                        {
+                            var index = items.IndexOf(existing);
+                            items.RemoveAt(index);
+                            items.Insert(index, createditem);
+                        }
+                        CommentText.Text = "";
+                    });
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            });
+        }
+
+        private void CommentsBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService?.GoBack();
         }
@@ -61,6 +150,24 @@ namespace WpfApp2.Comments
         private void CreateBtn_Click(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new NewsEditPage(CommentsChanged));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Save();
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var comment = GetContext<CommentsDTO>(sender);
+            commentId = comment.Id;
+            CommentText.Text = comment.Content;
+        }
+
+        private T GetContext<T>(object sender)
+        {
+            var view = sender as FrameworkElement;
+            return (T)view.DataContext;
         }
     }
 }

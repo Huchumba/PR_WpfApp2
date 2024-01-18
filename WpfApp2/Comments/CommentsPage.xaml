@@ -14,14 +14,15 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBlock FontSize="21" Margin="5">Новости</TextBlock>
-            <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="CreateBtn" Click="CreateBtn_Click">Создать</Button>
-            </StackPanel>
+
+            <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Name="CommentsBtn" Click="CommentsBtn_Click">Назад</Button>
+            <TextBlock FontSize="21" Margin="5" Grid.ColumnSpan="3" HorizontalAlignment="Center">Комментарии</TextBlock>
+
         </Grid>
         <Grid>
-            <ScrollViewer>
+            <ScrollViewer Margin="0,0,0,40">
                 <ItemsControl Name="commentsList">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -39,36 +40,41 @@
                                             <ColumnDefinition Width="Auto"/>
                                         </Grid.ColumnDefinitions>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Author}" FontSize="18" TextWrapping="WrapWithOverflow" />
+                                            <TextBlock Text="{Binding Author.Name}" FontSize="18" TextWrapping="WrapWithOverflow" />
                                             <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
                                         </StackPanel>
-                                        
+                                        <Button x:Name="EditBtn" Click="EditBtn_Click" Grid.Column="1">Редактировать</Button>
                                     </Grid>
 
                                     <TextBlock Text="{Binding Content}" FontSize="14" TextWrapping="Wrap"/>
-                                    <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Name="CommentsBtn" Click="CommentsBtn_Click">Комментарии</Button>
+                                    
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ScrollViewer>
-            <StackPanel Name="errorBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden">
+            <StackPanel Name="errorBlock" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Hidden" Height="37" Width="122">
                 <TextBlock Name="t1" FontSize="16" HorizontalAlignment="Center">Ошибка</TextBlock>
                 <TextBlock HorizontalAlignment="Center" Name="errorText">Что-то пошло не так...</TextBlock>
-                <Button 
-                    Margin="5" 
-                    Padding="5" 
-                    FontSize="14" 
-                    BorderThickness="0" 
-                    Background="White" 
-                    Name="RetryBtn" 
-                    Click="RetryBtn_Click"
-                    HorizontalAlignment="Center" >
-                    Повторить
-                </Button>
+
             </StackPanel>
-            <li:LoadingIndicator Name="loadingIndicator" IsActive="True"  Foreground="DarkCyan" Mode="Arcs" />
+            <li:LoadingIndicator Name="loadingIndicator" IsActive="True"  Foreground="DarkCyan" Mode="Arcs" Height="40" Width="40" />
+            <Grid>
+                <TextBox Name="CommentText" Width="auto" Background="#FFE2D2D2" Grid.Column="0" Grid.Row="1"/>
+                <Button Content="Отправить"  Click="Button_Click" Grid.Column="1" Grid.Row="1"/>
+
+                <Grid.RowDefinitions>
+                <RowDefinition Height="180*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+            
+            </Grid>
+
         </Grid>
     </DockPanel>
 </Page>
