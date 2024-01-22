@@ -1,10 +1,19 @@
 ﻿using Refit;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Data;
 using WebApplication1.News;
+using WpfApp2.Comments;
+using WpfApp2.Sessions;
 
 namespace WpfApp2.News
 {
@@ -25,5 +34,7 @@ namespace WpfApp2.News
         [Delete("/news/{id}")]
         Task Delete(int id);
     }
+
+    
 
 }

@@ -16,6 +16,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebApplication1.News;
 using WpfApp2.Comments;
+using WpfApp2.Sessions;
+using WpfApp2.Users;
 
 namespace WpfApp2.News
 {
@@ -29,7 +31,7 @@ namespace WpfApp2.News
         public NewsPage()
         {
             InitializeComponent();
-            service = RestService.For<INewsService>("http://localhost:5221");
+            service = NetworkManager.Instance.NewsService;
             newsList.ItemsSource = items;
             FetchNews();
         }
@@ -146,6 +148,11 @@ namespace WpfApp2.News
         {
             var view = sender as FrameworkElement;
             return (T)view.DataContext;
+        }
+
+        private void AuthBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new AuthPage());
         }
     }
 
