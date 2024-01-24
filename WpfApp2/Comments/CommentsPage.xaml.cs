@@ -16,7 +16,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebApplication1.Comments;
 using WebApplication1.News;
+using Windows.System;
 using WpfApp2.News;
+using WpfApp2.Sessions;
 
 namespace WpfApp2.Comments
 {
@@ -34,7 +36,7 @@ namespace WpfApp2.Comments
         public CommentsPage(int newsId)
         {
             InitializeComponent();
-            service = RestService.For<ICommentsService>("http://localhost:5221");
+            service = NetworkManager.Instance.CommmentsService;
             commentsList.ItemsSource = items;
             _newsId = newsId;
             FetchComments();

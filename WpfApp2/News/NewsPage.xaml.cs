@@ -154,6 +154,11 @@ namespace WpfApp2.News
         {
             NavigationService.Navigate(new AuthPage());
         }
+
+        private void QuitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AuthManager.Instance.ForceLogout();
+        }
     }
 
 }

@@ -20,7 +20,7 @@ namespace WpfApp2.Sessions
         [Delete("/auth")]
         Task Logout();
 
-        [Post("/auth")]
+        [Post("/auth/register")]
         Task<TokenDTO> Register([Body] UserCreateDTO data, [Header("User-Agent")] string userAgent);
     }
 }

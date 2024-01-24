@@ -23,6 +23,7 @@ Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorize
 Content="Авторизация"/>
                 
                 <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="CreateBtn" Click="CreateBtn_Click">Создать</Button>
+                <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="QuitBtn" Click="QuitBtn_Click">Выйти</Button>
                 
             </StackPanel>
             
@@ -49,8 +50,8 @@ Content="Авторизация"/>
                                             <TextBlock Text="{Binding Title}" FontSize="18" TextWrapping="WrapWithOverflow" />
                                             <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
                                         </StackPanel>
-                                        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">Редактировать</Button>
-                                        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">Удалить</Button>
+                                        <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">Редактировать</Button>
+                                        <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">Удалить</Button>
                                     </Grid>
 
                                     <TextBlock Text="{Binding Content}" FontSize="14" TextWrapping="Wrap"/>

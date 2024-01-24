@@ -93,7 +93,7 @@ namespace WpfApp2.Sessions
         {
             try
             {
-                var result = await service.Login(new() { Email = email, Password = pass }, userAgent);
+                var result = await service.Register(new() { Email = email, Password = pass, Name = name, Family = family, Patronymic = patronymic }, userAgent);
                 await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
                     TokenManager.Instance.AccessToken = result.Token;
@@ -104,7 +104,7 @@ namespace WpfApp2.Sessions
             catch (Exception ex)
             {
                 //раскомментировать если не понятно из за чего ошибка
-                //MessageBox.Show(ex.Message);    
+                MessageBox.Show(ex.Message);    
                 return false;
             }
         }

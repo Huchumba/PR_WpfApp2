@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebApplication1.News;
+using WpfApp2.Sessions;
 
 namespace WpfApp2.News
 {
@@ -28,7 +29,7 @@ namespace WpfApp2.News
         public NewsEditPage(EventHandler onNewsChanged, int? newsId = null)
         {
             InitializeComponent();
-            service = RestService.For<INewsService>("http://localhost:5221");
+            service = NetworkManager.Instance.NewsService;
             _newsId = newsId;
             OnNewsChanged += onNewsChanged;
             if (_newsId != null)
