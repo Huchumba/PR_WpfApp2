@@ -26,6 +26,19 @@ namespace WpfApp2.Users
             InitializeComponent();
         }
 
+        bool CheckPass()
+        {
+            if (passTb.Password != pass2Tb.Password)
+            {
+                MessageBox.Show("Пароль не совпадает", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private void Register()
         {
             string email = emailTb.Text;
@@ -65,7 +78,11 @@ namespace WpfApp2.Users
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            Register();
+
+            if(CheckPass()) 
+            {
+                Register();
+            }
         }
     }
 }

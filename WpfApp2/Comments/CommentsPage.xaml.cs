@@ -134,6 +134,7 @@ namespace WpfApp2.Comments
                             items.Insert(index, createditem);
                         }
                         CommentText.Text = "";
+                        commentId = null;
                     });
 
                 }

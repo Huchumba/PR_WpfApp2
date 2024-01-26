@@ -23,7 +23,7 @@ Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorize
 Content="Авторизация"/>
                 
                 <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="CreateBtn" Click="CreateBtn_Click">Создать</Button>
-                <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="QuitBtn" Click="QuitBtn_Click">Выйти</Button>
+                <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="QuitBtn" Click="QuitBtn_Click">Профиль</Button>
                 
             </StackPanel>
             
