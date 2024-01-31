@@ -22,5 +22,14 @@ namespace WpfApp2.Sessions
 
         [Post("/auth/register")]
         Task<TokenDTO> Register([Body] UserCreateDTO data, [Header("User-Agent")] string userAgent);
+
+        [Post("/auth/email")]
+        Task<UserDTO> ChangeEmail([Body] EmailChangeDTO data);
+
+        [Post("/auth/fio")]
+        Task<UserDTO> ChangeFio([Body] ChangeFioDTO data);
+
+        [Post("/auth/password")]
+        Task<UserDTO> ChangePassword([Body] PasswordChangeDTO data);
     }
 }

@@ -108,6 +108,24 @@ namespace WpfApp2.Sessions
                 return false;
             }
         }
-    }
 
+        public async Task<bool> ChangeEmail(string email)
+        {
+            try
+            {
+                var result = await service.ChangeEmail(new() { Email = email });
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //раскомментировать если не понятно из за чего ошибка
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+    }
 }
