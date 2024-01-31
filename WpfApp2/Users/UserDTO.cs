@@ -9,7 +9,7 @@ namespace WebApplication1.Users
         public string Name { get; set; } = "";
         public string Patronymic { get; set; } = "";
         public string Email { get; set; } = "";
-        public string Password { get; set; } = "";
+        // string Password { get; set; } = "";
     }
 
     public class UserCreateDTO

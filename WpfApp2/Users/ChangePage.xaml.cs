@@ -1,5 +1,4 @@
-﻿using LoadingIndicators.WPF;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,27 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using WebApplication1.Users;
+using Windows.System;
 using WpfApp2.Sessions;
+using WebApplication1.Users;
 
 namespace WpfApp2.Users
 {
     /// <summary>
-    /// Логика взаимодействия для ProfilePage.xaml
+    /// Логика взаимодействия для ChangePage.xaml
     /// </summary>
-    public partial class ProfilePage : Page
+    public partial class ChangePage : Page
     {
         private UserDTO user;
-        public ProfilePage()
+        public ChangePage()
         {
             InitializeComponent();
             SetProfile();
-            familyTb.IsReadOnly = true;
-            nameTb.IsReadOnly = true;
-            patronymicTb.IsReadOnly = true;
-            emailTb.IsReadOnly = true;
-
-
         }
 
         private void SetProfile()
@@ -49,7 +43,7 @@ namespace WpfApp2.Users
                     {
                         if (response == null)
                         {
-                          
+
                         }
                         else
                         {
@@ -65,33 +59,27 @@ namespace WpfApp2.Users
                 {
                     await Dispatcher.BeginInvoke(() =>
                     {
-                       
+
                     });
                 }
                 finally
                 {
                     await Dispatcher.BeginInvoke(() =>
                     {
-                        
+
                     });
                 }
             });
         }
 
-        private void loginBtn_Click(object sender, RoutedEventArgs e)
-        {
-            AuthManager.Instance.ForceLogout();
-            NavigationService?.GoBack();
-        }
-
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService?.GoBack();
+            NavigationService.GoBack();
         }
 
-        private void SaveBtn_Click(object sender, RoutedEventArgs e)
+        private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new ChangePage());
+
         }
     }
 }
