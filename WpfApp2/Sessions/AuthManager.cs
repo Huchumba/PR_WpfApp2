@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using WebApplication1.Users;
 
 namespace WpfApp2.Sessions
 {
@@ -32,6 +33,18 @@ namespace WpfApp2.Sessions
             set
             {
                 _authorized = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private UserDTO _userDTO;
+        public UserDTO User
+        {
+            
+            get { return _userDTO; }
+            set
+            {
+                _userDTO = value;
                 OnPropertyChanged();
             }
         }
@@ -116,7 +129,45 @@ namespace WpfApp2.Sessions
                 var result = await service.ChangeEmail(new() { Email = email });
                 await Application.Current.Dispatcher.InvokeAsync(() =>
                 {
-                    
+                    User = result;
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //раскомментировать если не понятно из за чего ошибка
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangeFio(string family, string name, string patronymic)
+        {
+            try
+            {
+                var result = await service.ChangeFio(new() { Family = family, Name = name, Patronymic = patronymic });
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    User = result;
+                });
+                return true;
+            }
+            catch (Exception ex)
+            {
+                //раскомментировать если не понятно из за чего ошибка
+                MessageBox.Show(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> ChangePassword(string password, string repeat)
+        {
+            try
+            {
+                var result = await service.ChangePassword(new() { Password = password, Repeat= repeat });
+                await Application.Current.Dispatcher.InvokeAsync(() =>
+                {
+                    User = result;
                 });
                 return true;
             }

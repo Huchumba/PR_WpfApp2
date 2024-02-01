@@ -28,6 +28,7 @@ namespace WpfApp2.Users
 
         bool CheckPass()
         {
+            
             if (passTb.Password != pass2Tb.Password)
             {
                 MessageBox.Show("Пароль не совпадает", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
