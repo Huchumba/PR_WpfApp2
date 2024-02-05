@@ -19,7 +19,14 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Name="CommentsBtn" Click="CommentsBtn_Click">Назад</Button>
+            <Button Margin="5" Padding="5" FontSize="14" Background="#FF4279FF" Foreground="White" BorderThickness="0" Name="BackBtn" Click="BackBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"></Setter>
+                    </Style>
+                </Button.Resources>
+                Назад
+            </Button>
             <TextBlock FontSize="21" Margin="5" Grid.ColumnSpan="3" HorizontalAlignment="Center">Комментарии</TextBlock>
 
         </Grid>
@@ -45,7 +52,14 @@
                                             <TextBlock Text="{Binding Author.Name}" FontSize="18" TextWrapping="WrapWithOverflow" />
                                             <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
                                         </StackPanel>
-                                        <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" x:Name="EditBtn" Click="EditBtn_Click" Grid.Column="1">Редактировать</Button>
+                                        <Button Background="#FF4279FF" Foreground="White" Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" x:Name="EditBtn" Click="EditBtn_Click" Grid.Column="1">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"></Setter>
+                                                </Style>
+                                            </Button.Resources>
+                                            Редактировать
+                                        </Button>
                                     </Grid>
 
                                     <TextBlock Text="{Binding Content}" FontSize="14" TextWrapping="Wrap"/>
@@ -64,7 +78,7 @@
             <li:LoadingIndicator Name="loadingIndicator" IsActive="True"  Foreground="DarkCyan" Mode="Arcs" Height="40" Width="40" />
             <Grid>
                 <TextBox Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Name="CommentText" Width="auto" Background="#FFE2D2D2" Grid.Column="0" Grid.Row="1"/>
-                <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Content="Отправить"  Click="Button_Click" Grid.Column="1" Grid.Row="1"/>
+                <Button Background="#FF4279FF" Foreground="White" Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Content="Отправить"  Click="Button_Click" Grid.Column="1" Grid.Row="1"/>
 
                 <Grid.RowDefinitions>
                 <RowDefinition Height="180*"/>

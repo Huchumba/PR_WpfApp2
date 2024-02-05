@@ -9,8 +9,22 @@
       Title="ProfilePage" Background="White">
 
     <Grid>
-        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="BackBtn" Click="BackBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top">Назад</Button>
-        <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="SaveBtn" Click="SaveBtn_Click" HorizontalAlignment="Right" VerticalAlignment="Top">Изменить</Button>
+        <Button Margin="5" Padding="5" FontSize="14" Background="#FF4279FF" Foreground="White" BorderThickness="0" Name="BackBtn" Click="BackBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"></Setter>
+                </Style>
+            </Button.Resources>
+            Назад
+        </Button>
+        <Button Margin="5" Background="#FF4279FF" Foreground="White" Padding="5" FontSize="14" BorderThickness="0" Name="SaveBtn" Click="SaveBtn_Click" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="5"></Setter>
+                </Style>
+            </Button.Resources>
+            Изменить
+        </Button>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
             <GroupBox  Header="Фамилия">
                 <TextBox  Name="familyTb" BorderThickness="0" />

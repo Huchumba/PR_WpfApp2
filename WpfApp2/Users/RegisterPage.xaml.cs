@@ -24,6 +24,9 @@ namespace WpfApp2.Users
         public RegisterPage()
         {
             InitializeComponent();
+            passTb.ToolTip = "Пароль должен соответствовать требованиям, включать в себя заглавные и прописные английские буквы, и специальный символ, а также быть минимум 8 символов.";
+            pass2Tb.ToolTip = "Повторите пароль.";
+
         }
 
         bool CheckPass()
@@ -85,5 +88,18 @@ namespace WpfApp2.Users
                 Register();
             }
         }
+
+        //private void passTb_PasswordChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if ((passTb.Password) is (@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"))
+        //    {
+                
+        //        passTb.SetCurrentValue(Control.BackgroundProperty, Brushes.White);
+        //    }
+        //    else
+        //    {
+               
+        //    }
+        //}
     }
 }

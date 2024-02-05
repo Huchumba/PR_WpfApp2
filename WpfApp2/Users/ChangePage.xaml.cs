@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using Windows.System;
 using WpfApp2.Sessions;
 using WebApplication1.Users;
+using WpfApp2.News;
 
 namespace WpfApp2.Users
 {
@@ -27,6 +28,8 @@ namespace WpfApp2.Users
         public ChangePage()
         {
             InitializeComponent();
+            passTb.ToolTip = "Пароль должен соответствовать требованиям, включать в себя заглавные и прописные английские буквы, и специальный символ, а также быть минимум 8 символов.";
+            repeatTb.ToolTip = "Повторите пароль.";
             SetProfile();
         }
 
@@ -79,23 +82,36 @@ namespace WpfApp2.Users
             string name = nameTb.Text;
             string family = familyTb.Text;
             string patronymic = patronymicTb.Text;
-            string repeat = repeatTb.Text;
+            string repeat = repeatTb.Password;
             Task.Run(async () =>
             {
                 try
                 {
-                    var result = await AuthManager.Instance.Register(email, pass, name, family, patronymic);
+                    if (name != user.Name || family != user.Family || patronymic != user.Patronymic)
+                    {
+                        var result1 = await AuthManager.Instance.ChangeFio(name, family, patronymic);
+                    }
+
+                    if (email != user.Email)
+                    {
+                        var result2 = await AuthManager.Instance.ChangeEmail(email);
+                    }
+                    if (pass != "")
+                    {
+                        var result3 = await AuthManager.Instance.ChangePassword(pass, repeat);
+                    }
 
                     await Dispatcher.BeginInvoke(() =>
                     {
-                        if (result)
+                        if(true)
                         {
-                            NavigationService?.GoBack();
+                            NavigationService.Navigate(new NewsPage());
                         }
                         else
                         {
                             MessageBox.Show("Не удалось зарегистрироваться. Проверьте корректность введенных данных", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+
                     });
                 }
                 catch (Exception ex)
@@ -107,12 +123,15 @@ namespace WpfApp2.Users
 
         private void BackBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.GoBack();
+            NavigationService?.GoBack();
         }
 
         private void loginBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (passTb.Password == repeatTb.Password)
+            {
+                Change();
+            }
         }
     }
 }

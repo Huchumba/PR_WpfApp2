@@ -37,4 +37,15 @@ namespace WpfApp2.Utils
         public BooleanToVisibilityConverter() : base(Visibility.Visible, Visibility.Collapsed) { }
     }
 
+    [ValueConversion(typeof(bool), typeof(int))]
+    public sealed class BooleanToIntConverter : BooleanConverter<int>
+    {
+        public BooleanToIntConverter() : base(1, 0) { }
+    }
+    [ValueConversion(typeof(bool), typeof(string))]
+    public sealed class BooleanToStringConverter : BooleanConverter<string>
+    {
+        public BooleanToStringConverter() : base("Истина", "Ложь") { }
+    }
+
 }

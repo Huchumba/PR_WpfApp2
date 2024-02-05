@@ -21,8 +21,22 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="BackBtn" Click="BackBtn_Click" HorizontalAlignment="Left">Назад</Button>
-            <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="SaveBtn" Click="SaveBtn_Click" Grid.Column="1">Сохранить</Button>
+            <Button Margin="5" Padding="5" FontSize="14" Background="#FF4279FF" Foreground="White" BorderThickness="0" Name="BackBtn" Click="BackBtn_Click" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"></Setter>
+                    </Style>
+                </Button.Resources>
+                Назад
+            </Button>
+            <Button Background="#FF4279FF" Foreground="White" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="SaveBtn" Click="SaveBtn_Click" Grid.Column="1">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="5"></Setter>
+                    </Style>
+                </Button.Resources>
+                Сохранить
+            </Button>
             <TextBox Name="titleText" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Padding="5">Заголовок</TextBox>
         </Grid>
         

@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WebApplication1.Comments;
 using WebApplication1.News;
+using Windows.ApplicationModel.Contacts;
 using Windows.System;
 using WpfApp2.News;
 using WpfApp2.Sessions;
@@ -38,6 +39,9 @@ namespace WpfApp2.Comments
             InitializeComponent();
             service = NetworkManager.Instance.CommmentsService;
             commentsList.ItemsSource = items;
+            
+            
+           
             _newsId = newsId;
             FetchComments();
 
@@ -163,14 +167,36 @@ namespace WpfApp2.Comments
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             var comment = GetContext<CommentsDTO>(sender);
-            commentId = comment.Id;
-            CommentText.Text = comment.Content;
+            var serviceAuth = NetworkManager.Instance.AuthService;
+            Task.Run(async () =>
+            {
+                var nowuser = await serviceAuth.Profile();
+                await Dispatcher.BeginInvoke(() =>
+                {
+                    if (nowuser.User.Id == comment.AuthorId)
+                    {
+                        commentId = comment.Id;
+                        CommentText.Text = comment.Content;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Это не ваш комментарий.");
+                    }
+                });
+            });
+
+
         }
 
         private T GetContext<T>(object sender)
         {
             var view = sender as FrameworkElement;
             return (T)view.DataContext;
+        }
+
+        private void BackBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }

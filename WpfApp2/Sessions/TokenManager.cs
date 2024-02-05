@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp2.Sessions
 {
-    internal class TokenManager
+    public class TokenManager
     {
         // создаем Singleton-класс с потокобезопасностью
         private static readonly Lazy<TokenManager> _instance = new(() => new TokenManager(), isThreadSafe: true);

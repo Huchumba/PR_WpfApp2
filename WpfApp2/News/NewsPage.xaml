@@ -18,12 +18,32 @@
             </Grid.ColumnDefinitions>
             <TextBlock FontSize="21" Margin="5">Новости</TextBlock>
             <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
-                <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="AuthBtn" Click="AuthBtn_Click"
+                <Button Background="#FF4279FF" Foreground="White" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="AuthBtn" Click="AuthBtn_Click"
 Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource invVisConvert}}"
-Content="Авторизация"/>
-                
-                <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="CreateBtn" Click="CreateBtn_Click">Создать</Button>
-                <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="QuitBtn" Click="QuitBtn_Click">Профиль</Button>
+Content="Авторизация">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"></Setter>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Background="#FF4279FF" Foreground="White" Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="CreateBtn" Click="CreateBtn_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"></Setter>
+                        </Style>
+                    </Button.Resources>
+                    Создать
+                </Button>
+                <Button Background="#FF4279FF" Foreground="White" Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Name="QuitBtn" Click="QuitBtn_Click">
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="5"></Setter>
+                        </Style>
+                    </Button.Resources>
+                    Профиль
+                </Button>
                 
             </StackPanel>
             
@@ -50,12 +70,33 @@ Content="Авторизация"/>
                                             <TextBlock Text="{Binding Title}" FontSize="18" TextWrapping="WrapWithOverflow" />
                                             <TextBlock Text="{Binding CreatedAt, StringFormat=dddd\, dd MMMM yyyy hh:mm:ss}" Foreground="DarkCyan"/>
                                         </StackPanel>
-                                        <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">Редактировать</Button>
-                                        <Button Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">Удалить</Button>
+                                        <Button Background="#FF4279FF" Foreground="White" Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="1" Name="EditBtn" Click="EditBtn_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"></Setter>
+                                                </Style>
+                                            </Button.Resources>
+                                            Редактировать
+                                        </Button>
+                                        <Button Background="Red" Foreground="White" Visibility="{Binding Source={x:Static auth:AuthManager.Instance}, Path=Authorized, Converter={StaticResource visConvert}}" Margin="5" Padding="5" FontSize="14" BorderThickness="0" Grid.Column="2" Name ="DeleteBtn" Click="DeleteBtn_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="CornerRadius" Value="5"></Setter>
+                                                </Style>
+                                            </Button.Resources>
+                                            Удалить
+                                        </Button>
                                     </Grid>
 
                                     <TextBlock Text="{Binding Content}" FontSize="14" TextWrapping="Wrap"/>
-                                    <Button Margin="5" Padding="5" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Name="CommentsBtn" Click="CommentsBtn_Click">Комментарии</Button>
+                                    <Button Background="#FF4279FF" Foreground="White" Margin="5" Padding="5" FontSize="14" BorderThickness="0" HorizontalAlignment="Left" Name="CommentsBtn" Click="CommentsBtn_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="Border">
+                                                <Setter Property="CornerRadius" Value="5"></Setter>
+                                            </Style>
+                                        </Button.Resources>
+                                        Комментарии
+                                    </Button>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 using WebApplication1.News;
 using WpfApp2.Comments;
 using WpfApp2.Sessions;
@@ -121,16 +123,50 @@ namespace WpfApp2.News
         private void EditBtn_Click(object sender, RoutedEventArgs e)
         {
             int newsId = GetContext<NewsDTO>(sender).Id;
-            NavigationService?.Navigate(new NewsEditPage(NewsChanged, newsId));
+            var item = GetContext<NewsDTO>(sender).AuthorId;
+            var serviceAuth = NetworkManager.Instance.AuthService;
+            Task.Run(async () =>
+            {
+                var nowuser = await serviceAuth.Profile();
+                await Dispatcher.BeginInvoke(() =>
+                {
+                    if (nowuser.User.Id == item)
+                    {
+                        NavigationService?.Navigate(new NewsEditPage(NewsChanged, newsId));
+                    }
+                    else
+                    {
+                        MessageBox.Show("Это не ваша новость.");
+                    }
+                });
+            });
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            var action = MessageBox.Show("Удалить новость? Это действие нельзя отменить!", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
-            if (action == MessageBoxResult.Yes)
+            var item = GetContext<NewsDTO>(sender).AuthorId;
+            
+            var serviceAuth = NetworkManager.Instance.AuthService;
+            Task.Run(async () =>
             {
-                DeleteNews(GetContext<NewsDTO>(sender).Id);
-            }
+                var nowuser = await serviceAuth.Profile();
+                await Dispatcher.BeginInvoke(() =>
+                {
+                    if (nowuser.User.Id == item)
+                    {
+                        var action = MessageBox.Show("Удалить новость? Это действие нельзя отменить!", "Предупреждение", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        if (action == MessageBoxResult.Yes)
+                        {
+                            DeleteNews(GetContext<NewsDTO>(sender).Id);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Это не ваша новость.");
+                    }
+                });
+            });
+            
         }
 
         private void CommentsBtn_Click(object sender, RoutedEventArgs e)

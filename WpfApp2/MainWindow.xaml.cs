@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +26,7 @@ namespace WpfApp2
         {
             InitializeComponent();
             this.pager.NavigationService.Navigate(new NewsPage());
+//this.Language = CultureInfo.;
 
         }
     }
