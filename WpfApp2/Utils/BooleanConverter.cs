@@ -45,7 +45,7 @@ namespace WpfApp2.Utils
     [ValueConversion(typeof(bool), typeof(string))]
     public sealed class BooleanToStringConverter : BooleanConverter<string>
     {
-        public BooleanToStringConverter() : base("Истина", "Ложь") { }
+        public BooleanToStringConverter() : base("True", "False") { }
     }
 
 }
