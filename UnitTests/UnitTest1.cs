@@ -54,7 +54,7 @@ namespace UnitTests
                 true,
                 typeof(string),
                 null,
-                CultureInfo("ru-RU", false)
+                CultureInfo.CurrentCulture = new CultureInfo("ru-RU")
                 );
             Assert.Equal("Истина", actualValue);
         }
